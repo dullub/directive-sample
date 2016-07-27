@@ -1,0 +1,42 @@
+<html>
+   <body>
+     <div ng-app="mainApp">
+	     Enter Percentage :- <input ng-model="percentage"></input><br/>
+	    <percentage-dir value="percentage" ng-init="percentage = 15"></percentage-dir>
+	    <percentage-dir value="20" ></percentage-dir>
+	</div>
+		
+    <script src ="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+    <script>
+        var mainApp = angular.module('mainApp', []);
+        
+		  mainApp.directive("percentageDir", function (){
+		    return {
+		        restrict: 'E',
+		        scope: {
+		            value: '=',
+		        },
+		        templateUrl: 'directivetemplates/percentageTemplate.html',
+		        link: function(scope, element, attrs) {
+		           element.on('click', function () {
+	                  alert('You cannot write Here.');
+	               
+	              });
+	               scope.value = attrs.value;
+		           scope.canvas = element.find('canvas')[0];
+		           scope.context = scope.canvas.getContext('2d');
+		 
+		           scope.$watch('value', function(currentValue) {
+		             fillWidth = Math.ceil(currentValue / 100 * scope.canvas.width);
+		             scope.context.fillStyle = "#cccccc";
+		             scope.context.fillRect(0, 0, scope.canvas.width, scope.canvas.height);
+		             scope.context.fillStyle = "#0000FF";
+		             scope.context.fillRect(0, 0, fillWidth, scope.canvas.height);
+		           });
+		        }        
+		    };
+		});
+      </script>
+</body>
+</html>
